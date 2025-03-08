@@ -56,3 +56,16 @@ class IsPrivateChatTgBotFilter(Filter):
             return update.message.chat.type == aiogram.enums.ChatType.PRIVATE
         else:
             return False
+
+
+class IsPdfDocumentFilter(Filter):
+    async def __call__(self, message: aiogram.types.Message) -> bool:
+        return bool(message.document and message.document.mime_type == "application/pdf")
+
+
+class IsImageFileFilter(Filter):
+    async def __call__(self, message: aiogram.types.Message) -> bool:
+        return bool(
+            message.photo or
+            (message.document and message.document.mime_type.startswith("image/"))
+        )
