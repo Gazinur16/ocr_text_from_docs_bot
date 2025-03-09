@@ -21,12 +21,18 @@ async def _(
         tg_file = await transmitted_tg_bot_data.tg_bot.get_file(file_id=m.document.file_id)
         file_type = FileTypes.png if m.document.mime_type == "image/png" else FileTypes.jpg
     else:
-        await m.answer("⚠ Не удалось загрузить изображение. Попробуйте еще раз.")
+        await m.answer(text=PublicTgBotBlank.failed_to_load_the_image())
         return
 
     file_bytes = await transmitted_tg_bot_data.tg_bot.download_file(file_path=tg_file.file_path)
 
-    await m.answer(text=PublicTgBotBlank.image_is_loaded())
+    loaded_msg = await m.answer(text=PublicTgBotBlank.image_is_loaded())
 
     text_from_photo = await get_text_from_photo(file_bytes=file_bytes.read(), file_type=file_type)
-    print(text_from_photo)
+
+    if not text_from_photo:
+        await loaded_msg.edit_text(text="Не удалось найти текст 🥹"
+                                       "Пожалуйста, убедитесь что в документе есть текст, и попробуйте снова.")
+        return
+
+    await loaded_msg.edit_text(text=text_from_photo)

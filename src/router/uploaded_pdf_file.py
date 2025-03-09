@@ -16,7 +16,14 @@ async def _(
     tg_file = await transmitted_tg_bot_data.tg_bot.get_file(file_id=m.document.file_id)
     file_bytes = await transmitted_tg_bot_data.tg_bot.download_file(file_path=tg_file.file_path)
 
-    await m.answer(text=PublicTgBotBlank.doc_is_loaded())
+    loaded_msg = await m.answer(text=PublicTgBotBlank.doc_is_loaded())
 
     text_from_pdf = await get_text_from_pdf_doc(file_bytes=file_bytes.read())
-    print(text_from_pdf)
+
+    if not text_from_pdf:
+        await loaded_msg.edit_text(text="Не удалось найти текст 🥹"
+                                       "Пожалуйста, убедитесь что в документе есть текст, и попробуйте снова.")
+        return
+
+    await loaded_msg.edit_text(text=text_from_pdf)
+
