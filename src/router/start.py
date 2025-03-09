@@ -10,7 +10,6 @@ from src.filter.filter_ import TextFilterTgBotFilter, IsPrivateChatTgBotFilter
 router = Router()
 _logger = logging.getLogger(__name__)
 
-
 @router.message(
     or_f(
         Command(PublicTgBotCommands.start),
@@ -26,7 +25,6 @@ _logger = logging.getLogger(__name__)
     StateFilter("*")
 )
 async def _(m: types.Message, **kwargs):
-
     await m.answer(
         text=PublicTgBotBlank.start()
     )

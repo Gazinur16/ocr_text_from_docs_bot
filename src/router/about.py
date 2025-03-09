@@ -22,7 +22,6 @@ router = Router()
     StateFilter("*")
 )
 async def _(m: types.Message, **kwargs):
-
     await m.answer(
         text=PublicTgBotBlank.about()
     )

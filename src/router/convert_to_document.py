@@ -1,6 +1,8 @@
 import logging
+import uuid
 
 from aiogram import Router, types
+from aiogram.exceptions import AiogramError
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 
@@ -30,8 +32,11 @@ async def _(cq: types.CallbackQuery,
     full_text = state_data.get(f"text_from_{callback_data.message_id}")
 
     if not full_text:
-        await cq.answer(text=PublicTgBotBlank.not_found_the_full_text(), show_alert=True)
-        #TODO нужно скрывать кнопки
+        try:
+            await cq.answer(text=PublicTgBotBlank.not_found_the_full_text(), show_alert=True)
+            await cq.message.edit_reply_markup(reply_markup=None)
+        except AiogramError:
+            pass
         return
 
     if callback_data.type_file == TypesOfFilesForConverting.docx:
@@ -44,10 +49,13 @@ async def _(cq: types.CallbackQuery,
         file_buffer = convert_to_md(full_text=full_text)
         file_type = TypesOfFilesForConverting.md
 
-    #TODO Нужно генерить UUID + TRY
-    file_name = f"{callback_data.message_id}.{file_type}"
-    await transmitted_tg_bot_data.tg_bot.send_document(
-        chat_id=cq.from_user.id,
-        document=types.BufferedInputFile(file_buffer.getvalue(), filename=file_name)
-    )
-    await cq.answer(text=PublicTgBotBlank.text_is_successfully_converted(file_type=file_type))
+
+    file_name = f"{uuid.uuid4().hex[:12]}.{file_type}"
+    try:
+        await transmitted_tg_bot_data.tg_bot.send_document(
+            chat_id=cq.from_user.id,
+            document=types.BufferedInputFile(file_buffer.getvalue(), filename=file_name)
+        )
+        await cq.answer(text=PublicTgBotBlank.text_is_successfully_converted(file_type=file_type))
+    except AiogramError as e:
+        _logger.error(e)

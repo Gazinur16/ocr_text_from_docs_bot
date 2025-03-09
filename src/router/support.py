@@ -28,7 +28,6 @@ router = Router()
     StateFilter("*")
 )
 async def _(m: types.Message, **kwargs):
-
     await m.answer(
         text=PublicTgBotBlank.support(),
         reply_markup=support_ikb()
