@@ -48,7 +48,8 @@ class PublicTgBotBlank:
         res += f"\n1. Отправьте PDF-документ или изображение с текстом."
         res += f"\n2. Бот обработает файл и покажет вам текст."
         res += f"\n3. Используйте кнопки для скачивания в удобном формате."
-        res += f"\n\n:link: <b>Поддержка:</b> https://t.me/nurtdinov_gt"
+        res += (f"\n\n:link: <b>Поддержка:</b> https://t.me/nurtdinov_gt"
+                f"\n:octopus: <b>Код проекта:</b> https://github.com/Gazinur16/ocr_text_from_docs_bot.git")
         return emojize(res.strip())
 
     @classmethod
