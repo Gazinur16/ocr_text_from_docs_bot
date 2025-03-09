@@ -1,6 +1,6 @@
 from emoji import emojize
 
-from src.core.const import PublicTgBotCommands
+from src.core.const import PublicTgBotCommands, TypesOfFilesForConverting
 
 
 class PublicTgBotBlank:
@@ -58,6 +58,17 @@ class PublicTgBotBlank:
     @classmethod
     def failed_to_load_the_image(cls) -> str:
         res = f":warning: Не удалось загрузить изображение. Пожалуйста, попробуйте еще раз."
+        return emojize(res.strip())
+
+    @classmethod
+    def convert_to(cls, type_file: TypesOfFilesForConverting) -> str:
+        if type_file is TypesOfFilesForConverting.docx:
+            res = f":page_facing_up: Конвертировать в {TypesOfFilesForConverting.docx.upper()} (word)"
+        elif type_file is TypesOfFilesForConverting.txt:
+            res = f":spiral_notepad: Конвертировать в {TypesOfFilesForConverting.txt.upper()} (блокнот)"
+        else:
+            res = f":memo: Конвертировать в {TypesOfFilesForConverting.md.upper()} (markdown)"
+
         return emojize(res.strip())
 
 

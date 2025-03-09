@@ -42,9 +42,10 @@ async def _(cq: types.CallbackQuery,
         file_buffer = convert_to_md(full_text=full_text)
         file_type = TypesOfFilesForConverting.md
 
-    file_name = f"ocr_result.{file_type}"
+    #TODO Нужно генерить UUID
+    file_name = f"{callback_data.message_id}.{file_type}"
     await transmitted_tg_bot_data.tg_bot.send_document(
         chat_id=cq.from_user.id,
-        document=types.BufferedInputFile(file_buffer.getvalue(), filename=file_name),
-        caption=f"Ваш файл в формате {file_type.upper()} 📄"
+        document=types.BufferedInputFile(file_buffer.getvalue(), filename=file_name)
     )
+    await cq.answer(text=f"✅ Текст успешно конвертирован в формат {file_type.upper()}")
