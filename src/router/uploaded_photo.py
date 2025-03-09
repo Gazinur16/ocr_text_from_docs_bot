@@ -1,16 +1,19 @@
 from aiogram import types, Router
+from aiogram.fsm.context import FSMContext
 
 from src.blank.public import PublicTgBotBlank
 from src.business_service.get_text_from_photo import get_text_from_photo
 from src.core.const import FileTypes
 from src.core.transmitted_tg_bot_data import TransmittedTgBotData
 from src.filter.filter_ import IsPrivateChatTgBotFilter, IsImageFileFilter
+from src.kb.inline import conversion_of_text_to_file
 
 router = Router()
 
 @router.message(IsPrivateChatTgBotFilter(), IsImageFileFilter())
 async def _(
         m: types.Message,
+        state: FSMContext,
         transmitted_tg_bot_data: TransmittedTgBotData,
         **kwargs
 ):
@@ -35,4 +38,10 @@ async def _(
                                        "Пожалуйста, убедитесь что в документе есть текст, и попробуйте снова.")
         return
 
-    await loaded_msg.edit_text(text=text_from_photo)
+    await state.update_data({f"text_from_{m.message_id}": text_from_photo})
+    if len(text_from_photo) > 4096:
+        text_from_photo = text_from_photo[:3900] + ("\n\n📌 Текст был обрезан из-за ограничения Telegram"
+                                                "\nДля получения полного текста, можно скачать файл в одном из предложеных ниже вариантов.")
+
+    await loaded_msg.edit_text(text=text_from_photo,
+                               reply_markup=conversion_of_text_to_file(message_id=m.message_id))

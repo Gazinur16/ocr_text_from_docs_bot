@@ -13,6 +13,11 @@ class FileTypes(Enumeration):
     png = "png"
     jpg = "jpg"
 
+class TypesOfFilesForConverting(Enumeration):
+    docx = "docx"
+    txt = "txt"
+    md = "md"
+
 class PublicTgBotCommands(Enumeration):
     start = "start"
     about = "about"
