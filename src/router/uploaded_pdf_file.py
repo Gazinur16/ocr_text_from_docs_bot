@@ -24,14 +24,14 @@ async def _(
     text_from_pdf = await get_text_from_pdf_doc(file_bytes=file_bytes.read())
 
     if not text_from_pdf:
-        await loaded_msg.edit_text(text="Не удалось найти текст 🥹"
-                                       "\n\nПожалуйста, убедитесь что в документе есть текст, и попробуйте снова.")
+        await loaded_msg.edit_text(text=PublicTgBotBlank.failed_to_find_the_text_in_the_photo())
         return
 
     await state.update_data({f"text_from_{m.message_id}": text_from_pdf})
     if len(text_from_pdf) > 4096:
-        text_from_pdf = text_from_pdf[:3900] + ("\n\n 📌 Текст был обрезан из-за ограничения Telegram"
-                                                "\nДля получения полного текста, можно скачать файл в одном из предложеных ниже вариантов.")
+        text_from_pdf = text_from_pdf[:3900] + "\n\n" +PublicTgBotBlank.the_text_was_cut()
+    else:
+        text_from_pdf += "\n\n" + PublicTgBotBlank.convert_and_download_file()
 
     await loaded_msg.edit_text(text=text_from_pdf,
                                reply_markup=conversion_of_text_to_file(message_id=m.message_id))

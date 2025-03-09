@@ -45,19 +45,53 @@ class PublicTgBotBlank:
 
     @classmethod
     def image_is_loaded(cls) -> str:
-        res = f":paperclip: Изображение загружено!"
+        res = f":paperclip: <b>Изображение загружено!</b>"
         res += f"\n\n:magnifying_glass_tilted_left: Начинаю обработку, подождите немного..."
         return emojize(res.strip())
 
     @classmethod
     def doc_is_loaded(cls) -> str:
-        res = f":paperclip: Документ загружен!"
+        res = f":paperclip: <b>Документ загружен!</b>"
         res += f"\n\n:magnifying_glass_tilted_left: Начинаю обработку, подождите немного..."
         return emojize(res.strip())
 
     @classmethod
     def failed_to_load_the_image(cls) -> str:
         res = f":warning: Не удалось загрузить изображение. Пожалуйста, попробуйте еще раз."
+        return emojize(res.strip())
+
+    @classmethod
+    def not_found_the_full_text(cls) -> str:
+        res = f":sad_but_relieved_face:  Не удалось найти текст."
+        res += f"\n\n:information: Пожалуйста, загрузите фото или документ с текстом снова."
+        return emojize(res.strip())
+
+    @classmethod
+    def text_is_successfully_converted(cls, file_type: str) -> str:
+        res=f":check_mark_button: Текст успешно конвертирован в формат {file_type.upper()}"
+        return emojize(res.strip())
+
+    @classmethod
+    def failed_to_find_the_text_in_the_photo(cls) -> str:
+        res = f":sad_but_relieved_face: Упсс, не удалось найти текст на фото"
+        res += f"\n\n:information:Пожалуйста, убедитесь что текст на фото видно хорошо, и попробуйте снова."
+        return emojize(res.strip())
+
+    @classmethod
+    def failed_to_find_the_text_in_pdf(cls) -> str:
+        res = f":sad_but_relieved_face: Упсс, не удалось найти текст в документе"
+        res += f"\n\n:information:Пожалуйста, убедитесь что в документе есть текст, и попробуйте снова."
+        return emojize(res.strip())
+
+    @classmethod
+    def the_text_was_cut(cls) -> str:
+        res = f"\n:warning: <b>Текст был обрезан из-за ограничения Telegram </b>"
+        res += f"\n\n:down_arrow: Для получения полного текста, можно скачать файл в одном из предложеных ниже вариантов."
+        return emojize(res.strip())
+
+    @classmethod
+    def convert_and_download_file(cls) -> str:
+        res = f":down_arrow: <b>Конвертировать и скачать файл в нужном формате.</b>"
         return emojize(res.strip())
 
     @classmethod
