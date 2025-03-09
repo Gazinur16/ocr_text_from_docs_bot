@@ -43,6 +43,23 @@ class PublicTgBotBlank:
         res = f":red_heart: НЕ ЗАБУДЬ ПРО ЭТО :red_heart:"
         return emojize(res.strip())
 
+    @classmethod
+    def image_is_loaded(cls) -> str:
+        res = f":paperclip: Изображение загружено!"
+        res += f"\n\n:magnifying_glass_tilted_left: Начинаю обработку, подождите немного..."
+        return emojize(res.strip())
+
+    @classmethod
+    def doc_is_loaded(cls) -> str:
+        res = f":paperclip: Документ загружен!"
+        res += f"\n\n:magnifying_glass_tilted_left: Начинаю обработку, подождите немного..."
+        return emojize(res.strip())
+
+    @classmethod
+    def failed_to_load_the_image(cls) -> str:
+        res = f":warning: Не удалось загрузить изображение. Пожалуйста, попробуйте еще раз."
+        return emojize(res.strip())
+
 
 def __example():
     pass

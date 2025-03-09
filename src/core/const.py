@@ -9,6 +9,9 @@ RESOURCE_DIRPATH: str = os.path.join(BASE_DIRPATH, "resource")
 ENV_FILENAME: str = ".env"
 ENV_FILEPATH: str = os.path.join(BASE_DIRPATH, ENV_FILENAME)
 
+class FileTypes(Enumeration):
+    png = "png"
+    jpg = "jpg"
 
 class PublicTgBotCommands(Enumeration):
     start = "start"
