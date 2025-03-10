@@ -9,6 +9,13 @@ RESOURCE_DIRPATH: str = os.path.join(BASE_DIRPATH, "resource")
 ENV_FILENAME: str = ".env"
 ENV_FILEPATH: str = os.path.join(BASE_DIRPATH, ENV_FILENAME)
 
+PROMPT_TO_EXTRACT_TEXT_FROM_PHOTO = (
+    "Проанализируй предоставленное изображение от пользователя и извлеки из него весь текст."
+    "\nВыведи результат в виде строки (str), сохраняя регистр,"
+    " знаки препинания и пробелы так, как они представлены на изображении."
+    "\n\nВыводи только текст, который есть на картинке! Не нужно добовлять комментариев от себя."
+)
+
 class FileTypes(Enumeration):
     png = "png"
     jpg = "jpg"

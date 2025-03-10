@@ -7,7 +7,7 @@ from src.core.settings import get_settings
 settings = get_settings()
 client = Mistral(api_key=settings.mistral_api_key)
 
-async def get_text_from_pdf_doc(file_bytes: bytes) -> str | None:
+async def get_text_from_pdf_doc_with_gpt(file_bytes: bytes) -> str | None:
     uploaded_pdf = client.files.upload(
         file={"file_name": "document.pdf", "content": file_bytes},
         purpose="ocr",

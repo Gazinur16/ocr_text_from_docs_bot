@@ -5,7 +5,7 @@ from functools import lru_cache
 from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 
-from arpakitlib.ar_json_util import safely_transfer_obj_to_json_str
+from arpakitlib.ar_json_util import transfer_data_to_json_str
 from src.core.const import BASE_DIRPATH, ENV_FILEPATH
 
 _logger = logging.getLogger(__name__)
@@ -28,6 +28,9 @@ class Settings(BaseSettings):
 
     mistral_api_key: str | None = None
 
+    openai_api_key: str | None = None
+    openai_api_base_url: str | None = "https://api.proxyapi.ru/openai/v1"
+
     media_dirname: str = "media"
     media_dirpath: str = os.path.join(BASE_DIRPATH, media_dirname)
 
@@ -45,4 +48,4 @@ def get_settings() -> Settings:
 
 
 if __name__ == '__main__':
-    print(safely_transfer_obj_to_json_str(get_settings().model_dump(mode="json")))
+    print(transfer_data_to_json_str(get_settings().model_dump(mode="json")))

@@ -55,7 +55,13 @@ class PublicTgBotBlank:
     @classmethod
     def image_is_loaded(cls) -> str:
         res = f":paperclip: <b>Изображение загружено!</b>"
-        res += f"\n\n:magnifying_glass_tilted_left: Начинаю обработку, подождите немного..."
+        res += f"\n\n:magnifying_glass_tilted_left: Начинаю обработку, подождите..."
+        return emojize(res.strip())
+
+    @classmethod
+    def difficult_case_please_wait(cls) -> str:
+        res = f":sad_but_relieved_face: <b>Непростой случай.</b>"
+        res += f"\n\n:hourglass_done: Пожалуйста, подождите еще немного..."
         return emojize(res.strip())
 
     @classmethod
@@ -67,6 +73,12 @@ class PublicTgBotBlank:
     @classmethod
     def failed_to_load_the_image(cls) -> str:
         res = f":warning: Не удалось загрузить изображение. Пожалуйста, попробуйте еще раз."
+        return emojize(res.strip())
+
+    @classmethod
+    def convert_the_last_file(cls) -> str:
+        res = f":sad_but_relieved_face: Конвертировать можно только последний загруженный вами файл."
+        res += f"\n\n:information: Пожалуйста, загрузите фото или документ с текстом снова."
         return emojize(res.strip())
 
     @classmethod

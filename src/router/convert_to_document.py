@@ -29,7 +29,17 @@ async def _(cq: types.CallbackQuery,
             **kwargs):
 
     state_data = await state.get_data()
-    full_text = state_data.get(f"text_from_{callback_data.message_id}")
+
+    last_msg_id_from_user = state_data.get(f"last_message_id_from_{cq.from_user.id}")
+    if last_msg_id_from_user == cq.message.message_id:
+        full_text = state_data.get(f"text_from_{cq.from_user.id}")
+    else:
+        try:
+            await cq.answer(text=PublicTgBotBlank.convert_the_last_file(), show_alert=True)
+            await cq.message.edit_reply_markup(reply_markup=None)
+        except AiogramError:
+            pass
+        return
 
     if not full_text:
         try:
